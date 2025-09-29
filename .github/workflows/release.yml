@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Configure CMake
       run: cmake -S . -B build
@@ -19,7 +19,7 @@ jobs:
       run: cmake --build build --config Release
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: myapp
         path: build/main   # 実行ファイル（例: build/main.exe）
