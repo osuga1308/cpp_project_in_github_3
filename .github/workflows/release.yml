@@ -3,7 +3,10 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'   # vから始まるタグをトリガーにする（例: v0.1.0）
+      - 'v*'
+
+permissions:
+  contents: write   # リリース作成に必須
 
 jobs:
   release:
@@ -18,14 +21,17 @@ jobs:
     - name: Build
       run: cmake --build build --config Release
 
+    - name: Check build output
+      run: ls -R build   # デバッグ用にファイル一覧を表示
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: myapp
-        path: build/main   # 実行ファイル（例: build/main.exe）
+        path: build/main*   # ワイルドカードで main or main.exe を拾う
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
-        files: build/main
+        files: build/main*
 
